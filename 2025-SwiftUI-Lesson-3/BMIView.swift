@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct BMIView: View {
-    @State private var height: Double = 1.7
-    @State private var weight: Double = 59
+    @State private var height: Double = 0
+    @State private var weight: Double = 0
     @State private var bmi: Double = 0
     
     var body: some View {

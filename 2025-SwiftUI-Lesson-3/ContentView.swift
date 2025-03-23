@@ -9,10 +9,10 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        NavigationStack {
-            ZStack {
-                Image("L3.001")
-                    .resizable()
+        ZStack {
+            Image("L3.001")
+            NavigationStack {
+                
                 NavigationLink("BMI Calculator") {
                     BMIView().navigationTitle("BMI Calculator")
                 }
