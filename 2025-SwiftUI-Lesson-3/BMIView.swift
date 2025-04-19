@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct BMIView: View {
-    @State private var height: Double = 0
-    @State private var weight: Double = 0
-    @State private var bmi: Double = 0
+    @State private var height: Double?
+    @State private var weight: Double?
+    @State private var bmi: Double?
     
     var body: some View {
         HStack {
             Text("Height")
                 .padding()
-            TextField("Height", value: $height, format: .number)
+            TextField("m", value: $height, format: .number)
                 .padding()
                 .multilineTextAlignment(.center)
                 .disableAutocorrection(true)
@@ -26,7 +26,7 @@ struct BMIView: View {
         HStack {
             Text("Weight")
                 .padding()
-            TextField("Weight", value: $weight, format: .number)
+            TextField("kg", value: $weight, format: .number)
                 .padding()
                 .multilineTextAlignment(.center)
                 .disableAutocorrection(true)
@@ -35,18 +35,33 @@ struct BMIView: View {
             
         }
         Button("Calculate"){
-            bmi = (weight / pow(height,2))
+            if let h = height, let w = weight {
+                bmi = getBMI(height: h, weight: w)
+            }
         }
         .padding()
         
-        Text("\(bmi, specifier: "%.2f")")
-            .padding()
-        Text(getHealthRisk(bmi))
-            .padding()
+        if let bmiValue = bmi {
+            Text("\(bmiValue, specifier: "%.2f")")
+        } else {
+            Text("BMI Value")
+        }
+        
+        if let bmiValue = bmi {
+            Text(getHealthRisk(bmiValue))
+        } else {
+            Text("")
+        }
     }
 }
 
+func getBMI(height h: Double, weight w: Double) -> Double {
+    let bmi = (w / pow(h,2))
+    return bmi
+}
+
 func getHealthRisk(_ bmi: Double) -> String {
+    
     switch bmi {
     case 0 ..< 18.5:
         return "Possible nutritional deficiency and osteoporosis."
