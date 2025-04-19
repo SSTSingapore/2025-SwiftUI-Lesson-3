@@ -34,23 +34,24 @@ struct BMIView: View {
                 .textFieldStyle(.roundedBorder)
             
         }
-        Button("Calculate"){
-            if let h = height, let w = weight {
+        
+        if let h = height, let w = weight {
+            Button("Calculate"){
                 bmi = getBMI(height: h, weight: w)
             }
-        }
-        .padding()
-        
-        if let bmiValue = bmi {
-            Text("\(bmiValue, specifier: "%.2f")")
+            .padding()
+            
+            if let bmiValue = bmi {
+                Text("\(bmiValue, specifier: "%.2f")")
+                    .padding()
+                Text(getHealthRisk(bmiValue))
+                    .padding()
+            }
+            
         } else {
-            Text("BMI Value")
-        }
-        
-        if let bmiValue = bmi {
-            Text(getHealthRisk(bmiValue))
-        } else {
-            Text("")
+            Button("Calculate"){}
+                .disabled(true)
+                .padding()
         }
     }
 }
